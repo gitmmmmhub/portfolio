@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madhan Prasanna R — Product Marketer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf7f4;
+  --bg2: #f4ede6;
+  --red: #c0392b;
+  --red-light: #e8d5d2;
+  --red-muted: #d4857a;
+  --ink: #1a1210;
+  --ink2: #4a3830;
+  --muted: #9e8880;
+  --border: #e5d8d2;
+  --white: #fff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: 'DM Sans', sans-serif; font-weight: 300;
+  line-height: 1.6; overflow-x: hidden;
+}
+
+/* CURSOR */
+.cursor-dot { width:8px;height:8px;background:var(--red);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%); }
+.cursor-ring { width:32px;height:32px;border:1px solid var(--red-muted);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s; }
+
+/* NAV */
+nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 3rem;background:rgba(250,247,244,.9);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s; }
+nav.scrolled { border-color:var(--border); }
+.nav-logo { font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600; }
+.nav-links { display:flex;gap:2.5rem;list-style:none; }
+.nav-links a { font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s; }
+.nav-links a:hover { color:var(--red); }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding: 10rem 3rem 6rem;
+  position: relative; overflow: hidden;
+}
+.hero-left { display:flex; flex-direction:column; align-items:center; }
+.hero-right { display:none; }
+.hero-eyebrow { font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem;opacity:0;animation:fadeUp .9s .2s forwards; }
+.hero-title { font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,10vw,9.5rem);font-weight:600;line-height:.88;letter-spacing:-.03em;opacity:0;animation:fadeUp .9s .4s forwards; }
+.hero-title em { font-style:italic;color:var(--red); }
+.hero-role-label { font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:var(--red);display:block;margin-bottom:.4rem; }
+.hero-sub { margin-top:2.5rem;font-size:.95rem;color:var(--ink2);max-width:44ch;line-height:1.85;font-weight:300;opacity:0;animation:fadeUp .9s .6s forwards; }
+.hero-actions { display:flex;align-items:center;justify-content:center;gap:2rem;margin-top:3rem;opacity:0;animation:fadeUp .9s .8s forwards; }
+.btn-primary { background:var(--ink);color:white;font-family:'DM Sans',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 2rem;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:background .25s,transform .2s;border-radius:2px; }
+.btn-primary:hover { background:var(--red);transform:translateY(-1px); }
+.btn-ghost { font-size:.75rem;color:var(--muted);text-decoration:none;transition:color .2s; }
+.btn-ghost:hover { color:var(--red); }
+
+/* Hero stat strip */
+.hero-stats {
+  display: flex; margin-top: 4rem;
+  border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+  opacity: 0; animation: fadeUp .9s 1s forwards;
+}
+.hero-stat-item {
+  padding: 1.2rem 2.5rem; border-right: 1px solid var(--border);
+  text-align: center;
+}
+.hero-stat-item:last-child { border-right: none; }
+.hero-stat-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; font-weight: 600; color: var(--red);
+  line-height: 1; display: block;
+}
+.hero-stat-label {
+  font-size: .58rem; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--muted); margin-top: .3rem; display: block;
+}
+
+.hero-scroll-hint { position:absolute;bottom:3rem;left:3rem;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.75rem; }
+.scroll-line { display:block;width:40px;height:1px;background:var(--muted);animation:lineGrow 2s ease-in-out infinite; }
+@keyframes lineGrow { 0%,100%{width:20px} 50%{width:50px} }
+
+/* SHARED */
+.section-divider { height:1px;background:var(--border);margin:0 3rem; }
+.section { padding:6rem 3rem;opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease; }
+.section.visible { opacity:1;transform:none; }
+.dark-section { background:var(--ink);color:white;padding:5rem 3rem;opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease; }
+.dark-section.visible { opacity:1;transform:none; }
+.dark-section .section-title { color:white; }
+.dark-section .section-num { color:var(--red-muted); }
+.section-header { display:flex;align-items:baseline;gap:1.2rem;margin-bottom:3.5rem; }
+.section-num { font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--red);font-style:italic; }
+.section-title { font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;letter-spacing:-.01em; }
+
+/* IMPACT GRID */
+.section-intro { font-size:.88rem;color:rgba(255,255,255,.5);max-width:55ch;margin-bottom:3rem;line-height:1.8; }
+.impact-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:0; }
+@media(max-width:700px){.impact-grid{grid-template-columns:1fr 1fr}}
+.impact-card { padding:2.5rem 2rem;border-right:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07); }
+.impact-card:nth-child(3n){border-right:none}
+.impact-big { font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:600;color:var(--red-muted);line-height:1;display:block; }
+.impact-desc { margin-top:.5rem;font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.6; }
+.impact-tag { display:inline-block;margin-top:.75rem;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.1);padding:.2rem .5rem; }
+
+/* POV SECTION */
+.pov-body {
+  display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start;
+}
+@media(max-width:700px){ .pov-body { grid-template-columns:1fr; gap:2rem; } }
+.pov-aside {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-style: italic; font-weight: 400;
+  color: var(--red-muted); line-height: 1.3;
+}
+.pov-text p {
+  font-size: .92rem; color: var(--ink2); line-height: 1.9;
+  margin-bottom: 1.2rem;
+}
+.pov-text p:last-child { margin-bottom: 0; }
+.pov-text strong { color: var(--ink); font-weight: 500; }
+
+/* CAPABILITIES — top 6 featured + rest condensed */
+.caps-intro { font-size:.88rem;color:var(--ink2);max-width:58ch;margin-bottom:2.5rem;line-height:1.8; }
+.caps-featured {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+  background: var(--border); border: 1px solid var(--border);
+  border-radius: 4px; overflow: hidden; margin-bottom: 2rem;
+}
+@media(max-width:700px){ .caps-featured { grid-template-columns:1fr 1fr; } }
+.cap-featured-item {
+  background: var(--white); padding: 1.75rem 1.5rem;
+  position: relative; cursor: default;
+  transition: background .2s;
+}
+.cap-featured-item:hover { background: var(--bg2); }
+.cap-featured-num {
+  font-family: 'Cormorant Garamond', serif; font-size: .85rem;
+  font-style: italic; color: var(--red-muted); margin-bottom: .4rem;
+}
+.cap-featured-name { font-weight: 500; font-size: .85rem; color: var(--ink); margin-bottom: .5rem; }
+.cap-featured-desc { font-size: .72rem; color: var(--muted); line-height: 1.6; }
+
+.caps-group-label { font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:2rem 0 .8rem; }
+.caps-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.55rem; }
+.cap-item { position:relative;border:1px solid var(--border);padding:.8rem 1rem;cursor:default;background:var(--white);transition:border-color .25s,box-shadow .2s,transform .2s;border-radius:4px; }
+.cap-item:hover { border-color:var(--red);box-shadow:0 4px 20px rgba(192,57,43,.08);transform:translateY(-2px); }
+.cap-name { font-size:.72rem;font-weight:500;color:var(--ink); }
+.cap-tooltip { display:none;position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);background:var(--ink);color:rgba(255,255,255,.82);font-size:.67rem;line-height:1.65;padding:.75rem 1rem;border-radius:4px;width:220px;z-index:50;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.15); }
+.cap-tooltip::after { content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink); }
+.cap-item:hover .cap-tooltip { display:block; }
+
+/* TIMELINE */
+.timeline-intro { font-size:.88rem;color:var(--ink2);max-width:55ch;margin-bottom:3.5rem;line-height:1.8; }
+.timeline { position:relative;padding-left:2rem; }
+.timeline::before { content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:var(--border); }
+.timeline-item { position:relative;margin-bottom:3rem; }
+.timeline-item:last-child { margin-bottom:0; }
+.timeline-dot { position:absolute;left:-2.45rem;top:6px;width:10px;height:10px;border-radius:50%;background:white;border:2px solid var(--red-muted);transition:background .2s,border-color .2s; }
+.timeline-item:first-child .timeline-dot { background:var(--red);border-color:var(--red);box-shadow:0 0 0 4px rgba(192,57,43,.12); }
+.timeline-year { font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem; }
+.timeline-role { font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;line-height:1.2;margin-bottom:.3rem; }
+.timeline-company { font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:.75rem; }
+.timeline-desc { font-size:.84rem;color:var(--ink2);line-height:1.75;max-width:60ch; }
+.timeline-tags { display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.9rem; }
+.t-tag { font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:.2rem .6rem;border-radius:2px; }
+.t-tag.geo { color:var(--red-muted);border-color:var(--red-light); }
+
+/* CONTACT */
+.contact-section { background:var(--red);color:white;padding:7rem 3rem;text-align:center; }
+.contact-eyebrow { font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:1.5rem; }
+.contact-heading { font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:600;font-style:italic;line-height:1.05;margin-bottom:1.5rem; }
+.contact-sub { font-size:.88rem;color:rgba(255,255,255,.68);max-width:42ch;margin:0 auto 2.5rem;line-height:1.8; }
+.btn-white { display:inline-block;background:white;color:var(--red);font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:1rem 2.5rem;border-radius:2px;text-decoration:none;transition:background .2s,color .2s,transform .2s; }
+.btn-white:hover { background:var(--ink);color:white;transform:translateY(-2px); }
+.contact-links { display:flex;justify-content:center;gap:2.5rem;margin-top:2.5rem; }
+.contact-links a { font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s; }
+.contact-links a:hover { color:white; }
+
+/* FOOTER */
+footer { background:var(--ink);padding:1.75rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+.footer-name { font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(255,255,255,.35); }
+.footer-note { font-size:.58rem;color:rgba(255,255,255,.18);letter-spacing:.08em; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:var(--bg)} ::-webkit-scrollbar-thumb{background:var(--red-light)}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="dot"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">Madhan Prasanna R.</div>
+  <ul class="nav-links">
+    <li><a href="#results">Results</a></li>
+    <li><a href="#pov">Thinking</a></li>
+    <li><a href="#experience">Journey</a></li>
+    <li><a href="#capabilities">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — two-column with decorative stat column -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Product Marketing · GTM · SaaS</div>
+    <h1 class="hero-title">
+      Madhan<br>Prasanna <em>R.</em>
+    </h1>
+    <p class="hero-sub">
+      <span class="hero-role-label">Product Marketer.</span>
+      Loves launching things — products, campaigns, markets, ideas. 3+ years of turning "we should do something here" into actual, measurable momentum.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get in touch</a>
+      <a href="#results" class="btn-ghost">See the numbers →</a>
+    </div>
+
+  </div>
+
+  <div class="hero-scroll-hint">
+    <span class="scroll-line"></span>
+    Scroll
+  </div>
+</section>
+
+<!-- RESULTS -->
+<div class="section-divider"></div>
+<section class="dark-section" id="results">
+  <div class="section-header">
+    <span class="section-num">01.</span>
+    <h2 class="section-title">Results that matter</h2>
+  </div>
+  <p class="section-intro">Here's the short version. Less jargon, more receipts.</p>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <span class="impact-big">35%</span>
+      <div class="impact-desc">Signup boost through localised digital & demand gen campaigns</div>
+      <span class="impact-tag">UAE</span>
+    </div>
+    <div class="impact-card">
+      <span class="impact-big">20%</span>
+      <div class="impact-desc">Month-over-month growth after launching a brand-new market from zero</div>
+      <span class="impact-tag">South Africa · MoM</span>
+    </div>
+    <div class="impact-card">
+      <span class="impact-big">30%</span>
+      <div class="impact-desc">Organic traffic lift from Arabic website localisation</div>
+      <span class="impact-tag">MENA · Organic</span>
+    </div>
+    <div class="impact-card">
+      <span class="impact-big">30+</span>
+      <div class="impact-desc">Events planned and run — in-person and remote, majority sold out</div>
+      <span class="impact-tag">Global</span>
+    </div>
+    <div class="impact-card">
+      <span class="impact-big">10+</span>
+      <div class="impact-desc">Feature and product launches handled end-to-end across multiple markets</div>
+      <span class="impact-tag">Multiple Markets</span>
+    </div>
+    <div class="impact-card">
+      <span class="impact-big" style="font-size:clamp(2rem,3.5vw,3rem);padding-top:.6rem;">0 → ↑</span>
+      <div class="impact-desc">Mobile signups bootstrapped from scratch using ASO + app install campaigns</div>
+      <span class="impact-tag">Kenya</span>
+    </div>
+  </div>
+</section>
+
+<!-- POINT OF VIEW -->
+<div class="section-divider"></div>
+<section class="section" id="pov">
+  <div class="section-header">
+    <span class="section-num">02.</span>
+    <h2 class="section-title">How I think about marketing</h2>
+  </div>
+  <div class="pov-body">
+    <div class="pov-aside">
+      It's not about what<br>we're proud of —<br>it's about what<br><em>they need to hear.</em>
+    </div>
+    <div class="pov-text">
+      <p>Learning has always been the constant for me — and it's not going anywhere. Challenges, pushing limits, solving problems. But most importantly, <strong>failure teaches more than success ever could</strong>. Every campaign that didn't land taught me something a winning one never would have.</p>
+      <p>When it comes to marketing, it starts with <strong>observing people</strong> — how they behave, what they respond to, what actually moves them. And then being willing to set aside your own preferences and act on what you see. Marketing that works is rarely marketing that the team is in love with. It's marketing that the customer recognises themselves in.</p>
+      <p>Every piece of communication — an ad copy, a billboard, a product video, a landing page — has one job: <strong>answer two questions before the customer even asks them.</strong> How is this different from everything else out there? And does it actually solve my problem? If the answer to both isn't clear in the first few seconds, you've already lost them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE / TIMELINE -->
+<div class="section-divider"></div>
+<section class="dark-section" id="experience">
+  <div class="section-header">
+    <span class="section-num">03.</span>
+    <h2 class="section-title">The Journey</h2>
+  </div>
+  <p class="timeline-intro" style="color:rgba(255,255,255,.5);">Started as the intern who actually read the briefs. Ended up running GTM for a whole region. Here's how it happened.</p>
+
+  <div class="timeline" style="--border:rgba(255,255,255,.1);">
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year" style="color:rgba(255,255,255,.3);">Jul 2023 – Present</div>
+      <div class="timeline-role" style="color:white;">Product Marketing Associate</div>
+      <div class="timeline-company">Zoho Corporation · Chennai</div>
+      <div class="timeline-desc" style="color:rgba(255,255,255,.55);">
+        Took full ownership of Zoho Books marketing across the MEA region — from positioning to campaign execution to in-person events. Launched new markets, localised the product in Arabic, ran paid and organic growth, set up onboarding workflows, and managed 30+ events along the way. Also spoke at workshops, which turned out to be surprisingly fun.
+      </div>
+      <div class="timeline-tags">
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">GTM</span>
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">Demand Gen</span>
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">Events</span>
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">Paid Ads</span>
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">Localisation</span>
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">Content</span>
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">Onboarding</span>
+        <span class="t-tag" style="color:var(--red-muted);border-color:rgba(192,57,43,.3);">UAE · KSA · Kenya · South Africa · Nigeria · India · Australia</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year" style="color:rgba(255,255,255,.3);">Jan 2023 – Jun 2023</div>
+      <div class="timeline-role" style="color:white;">Marketing Intern</div>
+      <div class="timeline-company">Zoho Corporation · Chennai</div>
+      <div class="timeline-desc" style="color:rgba(255,255,255,.55);">
+        Joined the team with curiosity and a lot of spreadsheets. Contributed to content, ran competitor research, and got hands-on with app store optimisation and mobile install campaigns. Liked it enough to stick around — and somehow convinced them to keep me.
+      </div>
+      <div class="timeline-tags">
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">Content</span>
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">Research</span>
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">ASO</span>
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">App Install Campaigns</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year" style="color:rgba(255,255,255,.3);">2019 – 2023</div>
+      <div class="timeline-role" style="color:white;">B.Tech, Electronics & Communications</div>
+      <div class="timeline-company">SASTRA University · Thanjavur</div>
+      <div class="timeline-desc" style="color:rgba(255,255,255,.55);">
+        Studied engineering; accidentally discovered a love for marketing. The analytical foundation turned out to be surprisingly useful — turns out building campaigns isn't that different from debugging systems (except the bugs are audience segments).
+      </div>
+      <div class="timeline-tags">
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">CGPA 7.69</span>
+        <span class="t-tag" style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.1);">C / C++ / Python</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<div class="section-divider"></div>
+<section class="section" id="capabilities">
+  <div class="section-header">
+    <span class="section-num">04.</span>
+    <h2 class="section-title">Capabilities</h2>
+  </div>
+  <p class="caps-intro">I work across the full marketing stack. Here's what I'm best at — and below, everything else I bring to the table. Hover any card to see how I actually use it.</p>
+
+  <!-- Top 6 featured -->
+  <div class="caps-featured">
+    <div class="cap-featured-item">
+      <div class="cap-featured-num">01</div>
+      <div class="cap-featured-name">GTM Strategy</div>
+      <div class="cap-featured-desc">Launch plans built from scratch — audience, positioning, channel mix, timing. Done it across new markets, new products, new regions.</div>
+    </div>
+    <div class="cap-featured-item">
+      <div class="cap-featured-num">02</div>
+      <div class="cap-featured-name">Product Positioning</div>
+      <div class="cap-featured-desc">Making the product feel made for the buyer. Adapted per market, language, and context — not copy-pasted.</div>
+    </div>
+    <div class="cap-featured-item">
+      <div class="cap-featured-num">03</div>
+      <div class="cap-featured-name">Demand Generation</div>
+      <div class="cap-featured-desc">Multi-channel campaigns that grow signups and pipeline — not just impressions. Digital, email, and offline working together.</div>
+    </div>
+    <div class="cap-featured-item">
+      <div class="cap-featured-num">04</div>
+      <div class="cap-featured-name">Campaign Analytics</div>
+      <div class="cap-featured-desc">Monitoring what matters and cutting what doesn't. Decisions made from data, not gut feel dressed up as strategy.</div>
+    </div>
+    <div class="cap-featured-item">
+      <div class="cap-featured-num">05</div>
+      <div class="cap-featured-name">Event Management</div>
+      <div class="cap-featured-desc">30+ events, in-person and remote — logistics, speakers, promotion, follow-up. Most sold out. The ones that didn't taught me something.</div>
+    </div>
+    <div class="cap-featured-item">
+      <div class="cap-featured-num">06</div>
+      <div class="cap-featured-name">Market Research</div>
+      <div class="cap-featured-desc">Finding positioning gaps before the competition does. Deep competitor analysis plus on-the-ground market understanding.</div>
+    </div>
+  </div>
+
+  <div class="caps-group-label">Also in the toolkit</div>
+  <div class="caps-grid">
+    <div class="cap-item">
+      <div class="cap-name">Lead Nurturing & Retention</div>
+      <div class="cap-tooltip">Automated workflows that guide prospects to conversion and keep customers engaged long enough that churn isn't even a thought.</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-name">Brand Strategy</div>
+      <div class="cap-tooltip">Keeping the brand coherent across channels, markets, and languages — including Arabic localisation for MENA.</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-name">Content Marketing</div>
+      <div class="cap-tooltip">Long-form articles, blogs, and collaterals that build organic authority and actually support the sales cycle.</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-name">ATL / OOH Campaigns</div>
+      <div class="cap-tooltip">Taking brand messaging beyond digital — above-the-line and out-of-home for broader market awareness.</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-name">Google Ads</div>
+      <div class="cap-tooltip">Search, display, and video — managing bids, targeting, and creative to drive qualified traffic, not just clicks.</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-name">LinkedIn Ads</div>
+      <div class="cap-tooltip">B2B targeting by role, industry, and company size — great for reaching finance and accounting decision-makers.</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-name">Meta Ads</div>
+      <div class="cap-tooltip">Social campaigns with segmentation, retargeting, and conversion optimisation built in.</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-name">ASO & App Growth</div>
+      <div class="cap-tooltip">App store optimisation and install campaigns for mobile acquisition. Built the Kenya playbook from zero.</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-name">SEO & Organic</div>
+      <div class="cap-tooltip">Ahrefs, Search Console, keyword strategy — organic isn't free, it just front-loads the work.</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-name">Zoho CRM & Auto.</div>
+      <div class="cap-tooltip">CRM pipelines, drip sequences, onboarding flows — the infrastructure that makes marketing scale.</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-name">Figma</div>
+      <div class="cap-tooltip">Enough to collaborate on creatives and have actual opinions in design reviews.</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-name">AI & Agentic Workflows</div>
+      <div class="cap-tooltip">Using AI to move faster — content, automation, research. This portfolio? Built from scratch in minutes with Claude. That's not a flex, that's just Tuesday.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-eyebrow">Let's connect</div>
+  <h2 class="contact-heading">Wow! You've come<br>this far — we should<br>probably talk.</h2>
+  <p class="contact-sub">Drop me a line — whether it's a role, a project, or just swapping notes on what's working in marketing right now.</p>
+  <a href="/cdn-cgi/l/email-protection#a4d6c9c5c0ccc5ca96949496e4c3c9c5cdc88ac7cbc99bd7d1c6cec1c7d099ecc1dd84e9c5c0ccc5ca" class="btn-white">Send me an email</a>
+  <div class="contact-links">
+    <a href="https://linkedin.com/in/" target="_blank">LinkedIn ↗</a>
+    <a href="tel:+919994854457">+91 99948 54457</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Madhan Prasanna R. — Product Marketer</div>
+  <div class="footer-note">Madurai · Chennai · The World &nbsp;·&nbsp; Built with Claude in minutes (that's the point)</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{ mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'; });
+  (function loop(){ rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop); })();
+  document.querySelectorAll('a,.cap-item,.cap-featured-item,.btn-primary,.btn-white').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ ring.style.width='48px';ring.style.height='48px';ring.style.borderColor='var(--red)'; });
+    el.addEventListener('mouseleave',()=>{ ring.style.width='32px';ring.style.height='32px';ring.style.borderColor='var(--red-muted)'; });
+  });
+  window.addEventListener('scroll',()=>{ document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40); });
+  const obs=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecti
