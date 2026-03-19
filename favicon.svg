@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#111110"/>
+      <stop offset="100%" style="stop-color:#0D0D0C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Deep near-black background — matches site's dark theme -->
+  <rect width="32" height="32" rx="6" fill="url(#bg)"/>
+
+  <!-- Serif cap left -->
+  <rect x="4.5" y="8.5" width="6.5" height="1.2" rx="0.3" fill="#F0EAD8"/>
+  <!-- Serif cap right -->
+  <rect x="21" y="8.5" width="6.5" height="1.2" rx="0.3" fill="#F0EAD8"/>
+
+  <!-- Left vertical stem -->
+  <rect x="6.8" y="8.5" width="2.2" height="15" rx="0.3" fill="#F0EAD8"/>
+
+  <!-- Right vertical stem -->
+  <rect x="23" y="8.5" width="2.2" height="15" rx="0.3" fill="#F0EAD8"/>
+
+  <!-- Left serif foot -->
+  <rect x="4.5" y="22.3" width="6.5" height="1.2" rx="0.3" fill="#F0EAD8"/>
+  <!-- Right serif foot -->
+  <rect x="21" y="22.3" width="6.5" height="1.2" rx="0.3" fill="#F0EAD8"/>
+
+  <!-- Left diagonal (left peak to center valley) -->
+  <polygon points="7.8,9.7 10.0,9.7 17.1,19.8 14.9,19.8" fill="#F0EAD8"/>
+
+  <!-- Right diagonal (center valley to right peak) -->
+  <polygon points="15.1,19.8 17.3,19.8 25.2,9.7 23.0,9.7" fill="#F0EAD8"/>
+
+  <!-- Warm gold period — nodding to the "R." motif on the site -->
+  <circle cx="27" cy="26" r="1.5" fill="#C9A96E"/>
+</svg>
